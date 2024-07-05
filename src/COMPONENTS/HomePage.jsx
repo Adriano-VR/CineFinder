@@ -5,6 +5,7 @@ import useFetch from "../HOOKS/useFetch.jsx";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "../CSS/transtition.css"
 import SectionMovies from "./SectionMovies.jsx";
+import "../CSS/linear.css"
 
 const HomePage = () => {
 
@@ -57,26 +58,30 @@ fetchData();
 
   return (
     <>
-    <div className="relative h-screen w-screen overflow-hidden">
+    <div className="relative h-screen  overflow-hidden">
       {selectedMovie && (
         <>
           <SwitchTransition mode="in-out">
             <CSSTransition
               key={selectedMovie.id} // Use movie ID as key
-              timeout={2000} // Duration of animation in milliseconds
+              timeout={500} // Duration of animation in milliseconds
               classNames="fade" // CSS class names for transition
             >
-              <div className="absolute inset-0">
+              <div className="absolute">
                 <img
                   src={`https://image.tmdb.org/t/p/original/${selectedMovie.backdrop_path}`}
                   alt={selectedMovie.title || "Movie Image"}
-                  className="w-full h-full object-cover brightness-[0.3]"
+                  className="object-contain"
                 />
               </div>
             </CSSTransition>
           </SwitchTransition>
 
-          <div className="relative z-10 pl-20 text-white h-full flex justify-center flex-col">
+          <div className="absolute linear text-white h-full w-full flex justify-center flex-col"
+            style={{ background: "linear-gradient(to bottom, rgba(0, 0, 0, .65), #0d0d0d)" }}>
+              <div className="pl-20 w-7/12">
+          {/* fazer um component para as info */}
+
             <h1 className="text-6xl font-bold tracking-wider">{selectedMovie.title}</h1>
             <div className="py-5 italic text-3xl tracking-wider text-zinc-100">
               {details.tagline && <p>{details.tagline}</p>}
@@ -90,12 +95,13 @@ fetchData();
                 ))}
               </ul>
             )}
-            <p className="text-gray-100 text-lg leading-7 pt-5 w-8/12">{selectedMovie.overview}</p>
+            <p className="text-gray-100 text-lg leading-8 tracking-wide pt-5 ">{selectedMovie.overview}</p>
             <div className="pt-5 flex items-center gap-5">
-              <button className="bg-green-400 p-3 rounded">TRAILER</button>
-              <button className="bg-orange-300 p-3 rounded">MORE INFO</button>
+              <button className="bg-green-300 p-3 rounded font-bold text-[#0d0d0d]">TRAILER</button>
+              <button className="bg-orange-300 p-3 rounded font-bold text-[#0d0d0d]">MORE INFO</button>
             </div>
           </div>
+        </div>
         </>
       )}
        

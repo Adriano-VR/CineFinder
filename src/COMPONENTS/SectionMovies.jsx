@@ -16,9 +16,8 @@ const SectionMovies = ({ category }) => {
 
   if (loading) return <div>Carregando...</div>;
   if (error) return <div>Erro: {error.message}</div>;
-
   return (
-    <section className="bg-transparent flex items-center justify-center flex-col p-5 box-border">
+    <section  className="linear flex items-center justify-center flex-col p-5 box-border">
   
       {category === 'pop' && data?.results && (
         <ListaFilmes arr={data.results} category="Popular" />
