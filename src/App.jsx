@@ -1,13 +1,21 @@
+import { Outlet } from "react-router-dom"
+import Header from "./COMPONENTS/Header"
 import "./CSS/fonts.css"
 import HomePage from "./TELAS/HomePage"
 
 function App() {
 
 
-    return (
-    <div className="sora">
-        <HomePage />
-        </div>
+    return (    
+<>
+        <Header />
+        <main>
+        <Outlet />
+        </main>
+</>
+      
+       
+        
     )
 
 }

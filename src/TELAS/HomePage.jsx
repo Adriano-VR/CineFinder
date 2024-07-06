@@ -77,7 +77,7 @@ fetchData();
             </CSSTransition>
           </SwitchTransition>
 
-          <div className="absolute linear text-white h-full w-full flex justify-center flex-col"
+          <div className="absolute z-10 linear text-white h-full w-full flex justify-center flex-col"
             style={{ background: "linear-gradient(to bottom, rgba(0, 0, 0, .65), #0d0d0d)" }}>
               <div className="pl-20 w-7/12">
           {/* fazer um component para as info */}

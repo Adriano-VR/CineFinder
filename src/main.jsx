@@ -7,16 +7,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import PageSeeAll from './TELAS/PageSeeAll.jsx';
+import HomePage from './TELAS/HomePage.jsx';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/see-all/:category", 
-    element: <PageSeeAll /> ,
+    children:[{
+      path:"/",
+      element: <HomePage />
+    }]
   },
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
