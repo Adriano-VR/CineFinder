@@ -1,36 +1,61 @@
-import ListaFilmes from './ListaFilmes.jsx';
+import ListaFilmesCategoria from './ListaFilmesCategoria.jsx';
 import PropTypes from 'prop-types';
-import { GET_NOWPLAYING, GET_POPULAR } from "../ENDPOINTS/api.js";
-import useRequest from "../REQUISICOES/useRequest.jsx";
+import { GET_NOWPLAYING, GET_POPULAR,GET_TOP_RATED } from "../ENDPOINTS/api.js";
+import useFetch from "../HOOKS/useFetch.jsx";
+import { useEffect, useState } from 'react';
 
 const SectionMovies = ({ category }) => {
-  let url, options;
+  const {request} = useFetch();
+  const [data, setData] = useState([]);
 
-  if (category === 'pop') {
-    ({ url, options } = GET_POPULAR());
-  } else if (category === 'now') {
-    ({ url, options } = GET_NOWPLAYING());
-  }
 
-  const { data, error, loading } = useRequest(url, options);
+  useEffect(() => {
 
-  if (loading) return <div>Carregando...</div>;
-  if (error) return <div>Erro: {error.message}</div>;
+    async function fetch() {
+      let apiCall;
+
+      if (category === 'pop') {
+        apiCall = GET_POPULAR();
+      } else if (category === 'now') {
+        apiCall = GET_NOWPLAYING();
+      }else if(category === 'top'){
+        apiCall = GET_TOP_RATED();
+      }
+  
+      if (apiCall) {
+        const { url , options } = apiCall;
+
+        const { json } = await request(url, options);
+        setData(json.results)
+      }
+
+    }
+   fetch()
+  }, [category, request]);
+
+  // if (loading) return <div>Carregando...</div>;
+  // if (error) return <div>Erro: {error.message}</div>;
+  
   return (
     <section  className="linear flex items-center justify-center flex-col p-5 box-border">
   
-      {category === 'pop' && data?.results && (
-        <ListaFilmes arr={data.results} category="Popular" />
+      {category === 'pop' && data && (
+        <ListaFilmesCategoria arr={data} category="Popular" />
       )}
-      {category === 'now' && data?.results && (
-        <ListaFilmes arr={data.results} category="Now Playing" />
+
+      {category === 'now' && data && (
+        <ListaFilmesCategoria arr={data} category="Now Playing" />
+      )}
+
+      {category === 'top' && data && (
+      <ListaFilmesCategoria arr={data} category="Top Rated" />
       )}
     </section>
   );
 };
 
 SectionMovies.propTypes = {
-  category: PropTypes.oneOf(['pop', 'now']).isRequired, // Garante que a categoria seja uma das opções válidas
+  category: PropTypes.exact(['pop', 'now']).isRequired, // Garante que a categoria seja uma das opções válidas
 };
 
 export default SectionMovies;

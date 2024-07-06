@@ -4,7 +4,7 @@ import { GET_POPULAR , GET_DETAILS_MOVIE} from "../ENDPOINTS/api.js" ;
 import useFetch from "../HOOKS/useFetch.jsx";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "../CSS/transtition.css"
-import SectionMovies from "./SectionMovies.jsx";
+import SectionMovies from "../COMPONENTS/SectionMovies.jsx";
 import "../CSS/linear.css"
 
 const HomePage = () => {
@@ -108,6 +108,7 @@ fetchData();
     </div>
       <SectionMovies category="pop" />
       <SectionMovies category="now" />
+      <SectionMovies category="top" />
     </>
    
   );
