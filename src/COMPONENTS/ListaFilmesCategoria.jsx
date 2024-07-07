@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
-import { ReactComponent as ArrowRight } from '../SVG/arrow-right-sm-svgrepo-com.svg';
 import { Link } from 'react-router-dom';
-
+import ArrowRight from "../SVG/ArrowRight";
 
 const ListaFilmesCategoria = ({arr,category}) => {
-  
+
   return (
-    <div className='flex flex-col gap-5  w-11/12 py-8 text-zinc-200'>
+    <div className='flex flex-col gap-5  w-11/12 py-8 text-[#FAA307]'>
        <div className='flex justify-between'>
         <h1 className='font-semibold text-left text-2xl '>{category}</h1>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center '>
             <Link to={`/see-all/${category.replace(/ /g, "-")}`}>
             <button className='text-xl'>See All</button>
               </Link>
             
-            <ArrowRight />
+            <ArrowRight color="#FAA307"/>
             </div>
        </div>
                 <div className='flex gap-4'>

@@ -17,7 +17,15 @@ const router = createBrowserRouter([
     children:[{
       path:"/",
       element: <HomePage />
-    }]
+    },{
+      
+        path: "/see-all/:category", 
+        element: <PageSeeAll /> ,
+      
+    }
+  
+  
+  ]
   },
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(

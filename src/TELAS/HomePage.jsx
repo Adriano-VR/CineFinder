@@ -58,7 +58,7 @@ fetchData();
 
   return (
     <>
-    <div className="relative h-screen  overflow-hidden">
+    <div className="relative h-[93vh]  overflow-hidden">
       {selectedMovie && (
         <>
           <SwitchTransition mode="in-out">
@@ -78,7 +78,7 @@ fetchData();
           </SwitchTransition>
 
           <div className="absolute z-10 linear text-white h-full w-full flex justify-center flex-col"
-            style={{ background: "linear-gradient(to bottom, rgba(0, 0, 0, .65), #0d0d0d)" }}>
+            style={{ background: "linear-gradient(to bottom, rgba(0, 0, 0, .5), #0d0d0d)" }}>
               <div className="pl-20 w-7/12">
           {/* fazer um component para as info */}
 
@@ -106,9 +106,9 @@ fetchData();
       )}
        
     </div>
-      <SectionMovies category="pop" />
-      <SectionMovies category="now" />
-      <SectionMovies category="top" />
+      <SectionMovies category="popular" />
+      <SectionMovies category="nowplaying" />
+      <SectionMovies category="toprated" />
     </>
    
   );
