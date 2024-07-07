@@ -4,7 +4,7 @@ import Loader from "./Loader";
 import { ReactComponent as IconPlay } from '../SVG/play-circle-svgrepo-com.svg';
 
 const ListarSeeAll = ({ arr, category, page, infopage, setPage,loading }) => {
-
+ 
 
     if (loading) {
       return <Loader />;

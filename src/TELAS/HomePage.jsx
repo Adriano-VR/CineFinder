@@ -1,39 +1,28 @@
 import React from "react";
 import { useEffect } from "react";
-import { GET_POPULAR , GET_DETAILS_MOVIE} from "../ENDPOINTS/api.js" ;
-import useFetch from "../HOOKS/useFetch.jsx";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "../CSS/transtition.css"
 import SectionMovies from "../COMPONENTS/SectionMovies.jsx";
-import "../CSS/linear.css"
+import { WhatsURL } from "../UTILS/utils.js";
 
 const HomePage = () => {
 
-  const { request } = useFetch(); // Desestrutura o estado e métodos do hook useFetch
   const [selectedMovie, setSelectedMovie] = React.useState(null);
-  const [details, setDetails] = React.useState({});
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(1);
   const [movies, setMovies] = React.useState([]);
 
+  const {data,getDetails, details} = WhatsURL('popular')
+  
   useEffect(() => {
     async function fetchData() {
-    const { url, options } = GET_POPULAR(); // Obtém a URL e opções para a requisição GET
-    const { json } = await request(url, options); // Faz a requisição e obtém a resposta
-    setSelectedMovie(json.results[index])
-    setMovies(json.results)
-      details(json.results[index].id)
+      setMovies(data)
+      setSelectedMovie(data[index])
+      getDetails(data[index].id)
+      console.log(data[index].id);
     }
  
-    
-    async function details(id) {
-     
-       const { url, options } = GET_DETAILS_MOVIE(id); // Obtém a URL e opções para a requisição GET
-       const { json } = await request(url, options); // Faz a requisição e obtém a resposta
-       setDetails(json)
-    }
-
 fetchData();
-}, [request,index]);
+}, [index,data]);
 
 
 
@@ -64,7 +53,7 @@ fetchData();
           <SwitchTransition mode="in-out">
             <CSSTransition
               key={selectedMovie.id} // Use movie ID as key
-              timeout={500} // Duration of animation in milliseconds
+              timeout={1000} // Duration of animation in milliseconds
               classNames="fade" // CSS class names for transition
             >
               <div className="absolute">

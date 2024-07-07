@@ -8,8 +8,8 @@ import {WhatsURL} from "../UTILS/utils.js";
     const { category } = useParams();
     const [page, setPage] = useState(1);
 
-
-  const {data,infoPage,loading} = WhatsURL((category.replace(/-/g, '').trim().toLowerCase()))
+   
+  const {data,infoPage,loading} = WhatsURL((category.replace(/-/g, '').trim().toLowerCase()),page)
 
     if (loading) {
       return <Loader />;
