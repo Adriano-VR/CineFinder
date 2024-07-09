@@ -8,24 +8,33 @@ import {
 } from "react-router-dom";
 import PageSeeAll from './TELAS/PageSeeAll.jsx';
 import HomePage from './TELAS/HomePage.jsx';
+import Authenticate from "./TELAS/Authenticate.jsx";
+import TVSeries from './TELAS/TVSeries.jsx';
 
 
 const router = createBrowserRouter([
+ 
   {
-    path: "/",
+    path: "",
     element: <App />,
-    children:[{
-      path:"/",
-      element: <HomePage />
-    },{
-      
-        path: "/see-all/:category", 
-        element: <PageSeeAll /> ,
-      
-    }
-  
-  
-  ]
+    children: [
+      {
+        path: "filmes",
+        element: <HomePage />
+      },
+      {
+        path: "/:type/:category" ,
+        element: <PageSeeAll />
+      },
+      {
+        path: "authenticate",
+        element: <Authenticate />
+      },
+      {
+        path: "series",
+        element: <TVSeries />
+      }
+    ]
   },
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(

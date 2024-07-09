@@ -3,13 +3,24 @@ import { Link } from 'react-router-dom';
 import ArrowRight from "../SVG/ArrowRight";
 
 const ListaFilmesCategoria = ({arr,category}) => {
+  // Obtendo o valor de 'type' do armazenamento de sessão
+  const type = sessionStorage.getItem("pathname") // Valor padrão se for null
 
+
+  // Formatação de 'category' para substituir espaços e converter para minúsculas, se necessário
+  const formattedCategory =  category.toLowerCase().replace(/ /g, '-') 
+
+  // Construindo a URL no formato "type:category"
+  const urlPath = `${type}/${formattedCategory}`;
+
+  console.log("url " ,urlPath)
   return (
     <div className='flex flex-col gap-5  w-11/12 py-8 text-[#FAA307]'>
        <div className='flex justify-between'>
         <h1 className='font-semibold text-left text-2xl '>{category}</h1>
             <div className='flex items-center justify-center '>
-            <Link to={`/see-all/${category.replace(/ /g, "-")}`}>
+            <Link to={`${urlPath}`}>
+
             <button className='text-xl'>See All</button>
               </Link>
             
@@ -41,7 +52,6 @@ const ListaFilmesCategoria = ({arr,category}) => {
 ListaFilmesCategoria.propTypes = {
   arr: PropTypes.array.isRequired,
   category: PropTypes.string.isRequired,
-
 };
 
 export default ListaFilmesCategoria

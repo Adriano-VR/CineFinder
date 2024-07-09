@@ -14,22 +14,22 @@ const {data} = WhatsURL(category)
     <section  className="linear flex items-center justify-center flex-col p-5 box-border ">
   
       {category === 'popular' && data && (
-        <ListaFilmesCategoria arr={data} category="Popular" />
+        <ListaFilmesCategoria arr={data} category="Popular"  />
       )}
 
       {category === 'nowplaying' && data && (
-        <ListaFilmesCategoria arr={data} category="Now Playing" />
+        <ListaFilmesCategoria arr={data} category="Now Playing"  />
       )}
 
       {category === 'toprated' && data && (
-      <ListaFilmesCategoria arr={data} category="Top Rated" />
+      <ListaFilmesCategoria arr={data} category="Top Rated"  />
       )}
     </section>
   );
 };
 
 SectionMovies.propTypes = {
-  category: PropTypes.exact(['pop', 'now']).isRequired, // Garante que a categoria seja uma das opções válidas
+  category: PropTypes.string.isRequired, // Garante que a categoria seja uma das opções válidas
 };
 
 export default SectionMovies;

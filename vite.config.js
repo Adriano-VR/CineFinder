@@ -7,5 +7,9 @@ import svgr from '@svgr/rollup';
 export default defineConfig({
   plugins: [react(),
     svgr()
-  ],
+  ], 
+  server: {
+    port: 5173,
+  },
+  base: '/',
 })
