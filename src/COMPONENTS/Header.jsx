@@ -1,8 +1,8 @@
 import  { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Logo from '../SVG/logo';
 import { GET_ACCOUNT_DETAILS, GET_REQUEST_TOKEN } from '../ENDPOINTS/api';
 import useFetch from '../HOOKS/useFetch';
+import {CircleUserRound,CircleChevronDown,X,DoorOpen} from "lucide-react"
 
 const Header = () => {
   const [lang, setLang] = useState(localStorage.getItem("lang") || "pt-BR");
@@ -11,11 +11,11 @@ const Header = () => {
   const [requestToken, setRequestToken] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    fetchAccountDetails();
- 
-    getRequestToken(); 
+      if(!isAuthenticated)  getRequestToken(); 
+   
   }, []);
 
   useEffect(() => {
@@ -66,11 +66,14 @@ const Header = () => {
       console.error('Token de request não está disponível');
       return;
     }
-    const redirectUrl = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=http://localhost:5173/authenticate`;
+    //  const redirectUrl = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=http://localhost:5173/authenticate`;
+    const redirectUrl = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=https://movies-tmdb-orpin.vercel.app/authenticate`;
+
     window.location.href = redirectUrl;
   };
 
   const handleLogout = () => {
+    setModal(false)
     localStorage.removeItem('session_id');
     setIsAuthenticated(false);
     setAccountDetails({});
@@ -94,14 +97,14 @@ const nav = useNavigate()
   };
 
   return (
-    <div className='flex justify-between items-center h-[7vh] sticky top-0 z-50 bg-[hsla(0,0%,8%,.9)] text-[#FAA307]'>
+    <div className='flex justify-between items-center h-[7vh] z-50 bg-[hsla(0,0%,8%,.9)] text-[#FAA307]'>
       <div className="w-11/12 flex justify-between items-center m-auto">
         <div className="flex gap-28 items-center">
           <div className='hover:scale-110 duration-300 cursor-pointer' onClick={handleLogoClick}>
-            <Logo color="#E85D04" />
+              <h1 className=' text-2xl tracking-widest  font-bold font-racing'>CINEFINDER</h1>
           </div>
           <nav>
-            <ul className="flex gap-3 cursor-pointer h-7 border-[#FAA307]">
+            <ul className="flex gap-3 cursor-pointer text-base h-7 border-[#FAA307]">
               <li 
                 className={selectedCategory === 'filmes' ? 'font-extrabold border-b border-inherit' : ''}
               >
@@ -119,20 +122,54 @@ const nav = useNavigate()
             </ul>
           </nav>
         </div>
-        <div className='flex gap-10 items-center'>
-          <select className='relative flex bg-transparent' value={lang} onChange={handleLanguageChange}>
-            <option value="en-US">en-US</option>
-            <option value="pt-BR">PT-BR</option>
-          </select>
-          {isAuthenticated ? (
-            <h1 onClick={handleLogout} className='cursor-pointer'>Logout</h1>
-          ) : (
-            <button onClick={handleLogin}>
-              Entrar
-            </button>
-          )}
+        <div className='flex items-center text-base gap-5 ' >
+              <select value={lang}  onChange={handleLanguageChange} className=" select select-ghost  max-w-xs  ">
+              <option value="en-US">US</option>
+              <option value="pt-BR">BR</option>
+             
+              </select>
+          <div className='w-[10vw]'>
+              {isAuthenticated ? (
+                <div className='flex gap-2 items-center '>
+                <h1 className=''>Oi , {accountDetails.username}</h1>
+                <CircleChevronDown className='size-5 cursor-pointer' onClick={() => setModal(true)} />
+                </div>
+              ) : (
+                <div className='flex items-center justify-center'>
+                <button onClick={handleLogin} className="btn btn-ghost ">
+                <CircleUserRound />
+                  Login
+                </button>
+                </div>
+                // <button onClick={handleLogin} className='flex items-center gap-1.5  p-2  rounded-lg '>
+                // <CircleUserRound className='size-5'/>Login
+                // </button>
+              )}
+          </div>
         </div>
       </div>
+          {modal && (
+            <div className='fixed inset-0 h-screen z-50 flex items-start justify-center bg-black/60  '>
+                  <div className='w-4/12 mt-10 flex flex-col bg-black p-5 gap-2 rounded-md'>
+                  <div className='flex items-center justify-center w-full'>
+                    <h1 className='flex-1'>Welcome, {accountDetails.username}</h1>
+                    <X onClick={() => setModal(false)} />
+                  
+                  </div>
+                  <p>ID : {accountDetails.id}</p> 
+                  <p>Nome : {accountDetails.name}</p> 
+                  <p>Pais : {accountDetails.iso_3166_1}</p> 
+                        <div className='flex justify-center gap-2 w-full cursor-pointer'>
+                        <DoorOpen className='size-5'/>
+                        <strong onClick={handleLogout}>Logout</strong>
+                        </div>
+                
+                </div>
+
+                 
+            </div>
+          )}
+    
     </div>
   );
 };

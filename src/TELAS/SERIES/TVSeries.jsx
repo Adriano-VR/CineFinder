@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { GET_SERIES_ONTHEAIR } from "../ENDPOINTS/api.js";
-import useFetch from "../HOOKS/useFetch.jsx";
-import ListarSeeAll from "../COMPONENTS/ListarSeeAll.jsx";
+import { GET_SERIES_ONTHEAIR } from "../../ENDPOINTS/api.js";
+import useFetch from "../../HOOKS/useFetch.jsx";
+import ListarLayout from "../../COMPONENTS/ListarLayout.jsx";
+
 
 const TVSeries = () => {
   const { request } = useFetch();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{}]);
   const [total_pages, setTotalPages] = useState(null);
   const [page, setPage] = useState(1);
 
@@ -20,11 +21,11 @@ const TVSeries = () => {
     fetchData(page);
   }, [page, request]); 
 
-  console.log("data", total_pages);
+
   return (
     <div>
       {data && data.length > 0 && (
-        <ListarSeeAll arr={data} category="SERIES ON THE AIR" total_pages={total_pages} setPage={setPage} />
+        <ListarLayout arr={data} category="SERIES" total_pages={total_pages} setPage={setPage} />
       )}
     </div>
   );

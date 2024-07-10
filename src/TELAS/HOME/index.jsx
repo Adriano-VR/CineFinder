@@ -1,11 +1,10 @@
 import React from "react";
 import { useEffect } from "react";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import "../CSS/transtition.css"
-import SectionMovies from "../COMPONENTS/SectionMovies.jsx";
-import { WhatsURL } from "../UTILS/utils.js";
-import InfoFilmesHomePage from "../COMPONENTS/InfoFilmesHomePage.jsx";
-import { useParams } from "react-router-dom";
+import "../../CSS/transtition.css"
+import SectionMovies from "../../TELAS/HOME/SectionMovies.jsx";
+import { WhatsURL } from "../../UTILS/utils.js";
+import InfoFilmesHomePage from "../../TELAS/HOME/InfoFilmesHomePage.jsx";
 
 const HomePage = () => {
 
@@ -19,8 +18,6 @@ const HomePage = () => {
     async function fetchData() {
       setMovies(data)
       setSelectedMovie(data[index])
-      
-
     }
  
 fetchData();
@@ -43,8 +40,6 @@ fetchData();
     }
   }, [index, movies]);
     
-
-
 
   return (
     <>

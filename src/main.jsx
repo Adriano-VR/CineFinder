@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
@@ -7,10 +8,17 @@ import {
   RouterProvider,
   Navigate
 } from "react-router-dom";
-import PageSeeAll from './TELAS/PageSeeAll.jsx';
-import HomePage from './TELAS/HomePage.jsx';
-import Authenticate from "./TELAS/Authenticate.jsx";
-import TVSeries from './TELAS/TVSeries.jsx';
+import  { Suspense, lazy } from 'react';
+
+import Authenticate from "./TELAS/AUTHENTICATE/Authenticate.jsx"
+import HomePage from "./TELAS/HOME/index.jsx"
+import Loader from './COMPONENTS/Loader.jsx';
+import Erro404 from "./TELAS/ERRO/Errro404.jsx";
+
+
+const FilmesCategoria = lazy(() => import('./TELAS/FILMES/FilmesCategoria.jsx'));
+const TVSeries = lazy(() => import('./TELAS/SERIES/TVSeries.jsx'));
+
 
 const router = createBrowserRouter([
   {
@@ -19,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "",
-    element: <App />,
+    element: <App />, 
     children: [
       {
         path: "filmes",
@@ -27,19 +35,33 @@ const router = createBrowserRouter([
       },
       {
         path: "/:type/:category",
-        element: <PageSeeAll />
-      },
-      {
-        path: "authenticate",
-        element: <Authenticate />
+        element: (
+          <Suspense fallback={<Loader />}>
+            <FilmesCategoria />
+          </Suspense>
+        ),
       },
       {
         path: "series",
-        element: <TVSeries />
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TVSeries />
+          </Suspense>
+        ),
       }
-    ]
+    ],
+    
+  },
+  {
+    path: "authenticate",
+    element: <Authenticate />
+  },
+  {
+    path: "*", 
+    element: <Erro404 />
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

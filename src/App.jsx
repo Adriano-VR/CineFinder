@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom"
 import Header from "./COMPONENTS/Header"
-import "./CSS/fonts.css"
-import HomePage from "./TELAS/HomePage"
+import Footer from "./COMPONENTS/Footer"
 
 function App() {
 
@@ -9,9 +8,10 @@ function App() {
     return (    
 <>
         <Header />
-        <main>
+        <main className="min-h-[86vh]">
         <Outlet />
         </main>
+        <Footer />
 </>
       
        

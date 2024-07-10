@@ -37,7 +37,6 @@ export const WhatsURL = (category,page) => {
       }, [category,page]);
 
       async function getDetails(id) {
-        
         const { url, options } =  GET_DETAILS_MOVIE(id);
          const {json} = await request(url, options); // Faz a requisição e obtém a resposta
         setDetails(json)
@@ -45,7 +44,6 @@ export const WhatsURL = (category,page) => {
      }
 
      async function getDetailsVideos(id) {
-        
       const { url, options } =  GET_DETAILS_MOVIE_TRAILER(id);
        const {json} = await request(url, options); // Faz a requisição e obtém a resposta
       setVideo(json.results)

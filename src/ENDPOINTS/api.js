@@ -4,6 +4,22 @@ const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YzA5MTg5MDNiYTVjNDAyNjZhMmE0M2Y4
 const lang = localStorage.getItem("lang"); 
 
 
+
+
+export function GET_SERIES_VIDEOS(seriesId) {
+  return {
+    url:`${API_URL}/3/tv/${seriesId}/videos?language=${lang}`,
+    options: {
+      method: 'GET',
+      headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer ' + TOKEN
+        }
+    },
+  };
+}
+
+
 export function GET_SERIES_ONTHEAIR(page) {
   const numberPage = page || 1;
 

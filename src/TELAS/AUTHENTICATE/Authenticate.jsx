@@ -1,23 +1,26 @@
 import { useEffect, useState } from 'react';
-import {  useNavigate } from 'react-router-dom'; // Adicionado useNavigate para redirecionamento
-import { CREATE_SESSION } from "../ENDPOINTS/api"; // Assumindo que você tem um endpoint para obter informações do usuário
-import useFetch from "../HOOKS/useFetch";
-import {ReactComponent as Check} from "../SVG/check-circle-svgrepo-com.svg";
-import {ReactComponent as Alert} from "../SVG/alert-square-svgrepo-com.svg";
-
+import {  useLocation, useNavigate } from 'react-router-dom'; // Adicionado useNavigate para redirecionamento
+import { CREATE_SESSION } from "../../ENDPOINTS/api"; // Assumindo que você tem um endpoint para obter informações do usuário
+import useFetch from "../../HOOKS/useFetch";
+import {ShieldCheck,ShieldX} from "lucide-react";
+import Loader from '../../COMPONENTS/Loader';
 
 const Authenticate = () => {
-  const { request } = useFetch();
+  const { request,loading } = useFetch();
   const navigate = useNavigate(); // Hook para redirecionamento
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    let requestToken = queryParams.get('request_token');
-      userPermission(requestToken);
+    const queryParams = new URLSearchParams(location.search);
     
-  }, []);
+    let requestToken = queryParams.get('request_token');
+    
+    if (requestToken) {
+      userPermission(requestToken);
+    }
+  }, [location.search]);
 
 
 
@@ -27,26 +30,9 @@ const Authenticate = () => {
   const userPermission = async (token) => {
     try {
       const { url, options } = CREATE_SESSION(token);
-      const { response, json } = await request(url, options);
+      const {  json } = await request(url, options);
 
-      if (!response) {
-        throw new Error("No response from server");
-      }
-
-  
-
-      if (!response.ok) {
-        throw new Error(`Server responded with status: ${response.status}`);
-      }
-
-      if (!json) {
-        throw new Error("Response JSON is null");
-      }
-
-      if (!json.session_id) {
-        throw new Error("Session ID not found in response");
-      }
-
+   
       localStorage.setItem('session_id', json.session_id);
       setIsAuthenticated(true);
     } catch (error) {
@@ -65,7 +51,7 @@ const Authenticate = () => {
       }, 3000);
       return () => clearTimeout(timeout);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (error) {
@@ -78,21 +64,20 @@ const Authenticate = () => {
   }, [error, navigate]);
 
 
+  if(loading) return <Loader />
+
 
   return (
-    <div className='text-zinc-200 h-[93vh] flex items-center   justify-center'>
+    <div className='text-zinc-200 h-screen flex items-center   justify-center'>
       
       {isAuthenticated  ? (
         <div className='flex flex-col items-center justify-center gap-2'>
-          <Check />
-          <h1>Autenticação concluída com sucesso!</h1>
+          <ShieldCheck className='size-44 text-green-400'  />
           <p>Redirecionando para a página inicial em 3 segundos...</p>
         </div>
       ) : (
         <div className='flex flex-col items-center justify-center gap-2'>
-          <Alert />
-          <h1>Autenticação falhou</h1>
-          {error && <p className="text-red-500">{error}</p>}
+          <ShieldX className='size-44 text-red-600'/>
            <p>Redirecionando para a página inicial em 3 segundos...</p>
         </div>
       )}

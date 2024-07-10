@@ -1,37 +1,24 @@
 import PropTypes from "prop-types";
-import {WhatsURL} from "../UTILS/utils"
-import { useEffect, useState } from "react";
+import {WhatsURL} from "../../UTILS/utils.js"
+import { useEffect } from "react";
+import GetTrailer from "../../UTILS/getTrailer.js"
+
 const InfoFilmesHomePage = ({selectedMovie}) => {
 
-    const {getDetailsVideos,video} = WhatsURL()
-    const [videoUrl, setVideoUrl] = useState(null)
-
+  const getDetailsVideos = GetTrailer()
+   
     const {getDetails, details} = WhatsURL('popular')
 
     useEffect(() => {
       getDetails(selectedMovie.id)
-      getDetailsVideos(selectedMovie.id) 
-    },[selectedMovie])
+    },[getDetails, selectedMovie])
 
 
-    const handleTrailer = () => {
-     
 
-      if ( video && Array.isArray(video) && video.length > 0) {
-        const officialTrailer = video.find(
-          video => video.name.includes('Trailer') || video.name.includes("trailer")
-        ); 
-      
-        if (officialTrailer) {
-          setVideoUrl(`https://www.youtube.com/watch?v=${officialTrailer.key}`);
-        }
-      }
-    }
-
-    const changeLanguage = () => {
-
-    return localStorage.getItem("lang") === "pt-BR" ? "MAIS INFORMAÇÕES" : "MORE INFO"
+    const handleTrailer = async () => await getDetailsVideos(selectedMovie.id)
     
+    const changeLanguage = () => {
+    return localStorage.getItem("lang") === "pt-BR" ? "MAIS INFORMAÇÕES" : "MORE INFO"
   }
 
 
@@ -55,19 +42,13 @@ const InfoFilmesHomePage = ({selectedMovie}) => {
             <p className="text-gray-100 text-lg leading-8 tracking-wide pt-5 ">{selectedMovie.overview}</p>
             <div className="pt-5 flex items-center gap-5">  
            
-              {video ? (
-              <button onClick={handleTrailer} className="bg-green-300 p-3 rounded font-bold text-[#0d0d0d]">
-                  <a href={videoUrl} target="_blank">
-                            TRAILER
-                            </a>
-                          </button>
-               ) : (
-                    <button className="bg-red-700 p-3 rounded font-bold text-[#0d0d0d]">
-                    NO TRAILER
-                    </button>
-               )
              
-               } 
+                  <button onClick={handleTrailer} className="bg-green-300 p-3 rounded font-bold text-[#0d0d0d]">
+                  TRAILER
+                  </button>
+                  
+             
+               
               
               <button className="bg-orange-300 p-3 rounded font-bold text-[#0d0d0d]">
                 {changeLanguage()}

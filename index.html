@@ -2,15 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="src/CSS/fonts.css">
-    <title>Vite + React</title>
+    <meta name="description" content="CineFinder é sua fonte para encontrar o melhor cinema perto de você.">
+    <meta name="keywords" content="cinema, filmes, encontrar cinema">
+    <meta name="author" content="Adriano Rodrigues">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Sora:wght@100..800&display=swap" rel="stylesheet">
+
+    <title>CineFinder</title>
   </head>
 
+<style>
+::-webkit-scrollbar {
+  display: none;
+}
 
+body {
+  scrollbar-width: none; /* Ocultar barra de rolagem */
+  -ms-overflow-style: none; /* Ocultar barra de rolagem para IE e Edge */
+}
 
-  <body class="antialiased box-border sora bg-[#0d0d0d]">
+html, body {
+  overflow: auto;
+}
+
+</style>
+
+  <body class="antialiased box-border font-sora bg-[#0d0d0d]">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
