@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import {CircleArrowRight}  from "lucide-react"
 
 const SectionFilmesCategoriaHome = ({ arr, category }) => {
-  const type = sessionStorage.getItem("pathname"); 
+ 
   const formattedCategory = category.toLowerCase().replace(/ /g, "-");
-  const urlPath = `${type}/${formattedCategory}`;
+  const urlPath = `${formattedCategory}`;
 
   return (
     <div className="flex flex-col gap-5  w-11/12 py-8 text-[#FAA307]">

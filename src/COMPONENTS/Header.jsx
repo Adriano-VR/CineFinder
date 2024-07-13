@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GET_ACCOUNT_DETAILS, GET_REQUEST_TOKEN } from '../ENDPOINTS/api';
 import useFetch from '../HOOKS/useFetch';
 import {CircleUserRound,CircleChevronDown,X,DoorOpen} from "lucide-react"
@@ -85,16 +85,31 @@ const Header = () => {
     else if (category === "series") return lang === "pt-BR" ? "Séries" : "TV Series";
   };
 
+  const [selectedCategory, setSelectedCategory] = useState(sessionStorage.getItem("selectedCategory") || "filmes");
+  
+  useEffect(() => {
+    sessionStorage.setItem("selectedCategory", selectedCategory);
+    
+  },[])
+
   const handleCategoryClick = (category) => {
     sessionStorage.setItem("selectedCategory", category);
+    setSelectedCategory(category)
   };
 
-  const selectedCategory = sessionStorage.getItem("selectedCategory") || 'filmes';
+
 const nav = useNavigate()
   const handleLogoClick = () => {
     sessionStorage.setItem("selectedCategory", 'filmes');
+    setSelectedCategory('filmes');
+
     nav('/filmes')
   };
+const type = 'tv'
+const cat =  'OnTheAir'
+
+const urlPath = `${type}/${cat}`;
+console.log(urlPath);
 
   return (
     <div className='flex justify-between items-center h-[7vh] z-50 bg-[hsla(0,0%,8%,.9)] text-[#FAA307]'>
@@ -106,16 +121,18 @@ const nav = useNavigate()
           <nav>
             <ul className="flex gap-3 cursor-pointer text-base h-7 border-[#FAA307]">
               <li 
-                className={selectedCategory === 'filmes' ? 'font-extrabold border-b border-inherit' : ''}
+                className={selectedCategory === 'filmes' ? 'font-extrabold border-b border-inherit' : null}
               >
                 <Link to="/filmes" onClick={() => handleCategoryClick('filmes')}>
                   {changeLanguage('filmes')}
                 </Link>
               </li>
               <li 
-                className={selectedCategory === 'series' ? 'font-extrabold border-b border-inherit' : ''}
+              className={selectedCategory === 'series' ? 'font-extrabold border-b border-inherit' : null}
               >
-                <Link to="/series" onClick={() => handleCategoryClick('series')}>
+
+
+                <Link to={`${urlPath}`} onClick={() => handleCategoryClick('series')}>
                   {changeLanguage('series')}
                 </Link>
               </li>

@@ -15,10 +15,9 @@ import HomePage from "./TELAS/HOME/index.jsx"
 import Loader from './COMPONENTS/Loader.jsx';
 import Erro404 from "./TELAS/ERRO/Errro404.jsx";
 
-
 const FilmesCategoria = lazy(() => import('./TELAS/FILMES/FilmesCategoria.jsx'));
 const TVSeries = lazy(() => import('./TELAS/SERIES/TVSeries.jsx'));
-
+const PageDetails = lazy(() => import('./TELAS/DETALHES/index.jsx'));
 
 const router = createBrowserRouter([
   {
@@ -34,7 +33,7 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "/:type/:category",
+        path: "/filmes/:category",
         element: (
           <Suspense fallback={<Loader />}>
             <FilmesCategoria />
@@ -42,12 +41,28 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "series",
+        path: "/tv/:category",
         element: (
           <Suspense fallback={<Loader />}>
             <TVSeries />
           </Suspense>
         ),
+      },
+      {
+        path:"tv/:category/details/:id",
+        element: (  
+          <Suspense fallback={<Loader />}> 
+          <PageDetails />
+          </Suspense>
+        )
+      },
+      {
+        path:"filmes/:category/details/:id",
+        element: (
+          <Suspense fallback={<Loader />}>
+          <PageDetails />
+          </Suspense>
+        )
       }
     ],
     

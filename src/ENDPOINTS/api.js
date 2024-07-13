@@ -79,10 +79,7 @@ export function GET_POPULAR(page) {
       },
     };
   }
-
-
-
-export function GET_DETAILS_MOVIE(movieID) {
+  export function GET_DETAILS_MOVIE(movieID) {
     return {
       url: API_URL + '/3/movie/' + movieID +'?language=' + lang,
       options: {
@@ -94,6 +91,35 @@ export function GET_DETAILS_MOVIE(movieID) {
       },
     };
   }
+
+
+export function GET_CREDITS_MOVIE(movieID) {
+    return {
+      url: API_URL + '/3/movie/' + movieID + '/credits' + '?language=' + lang,
+      options: {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + TOKEN
+          }
+      },
+    };
+  }
+
+  
+export function GET_DETAILS_SERIE(serieID) {
+  return {
+    url: API_URL + '/3/tv/' + serieID +'?language=' + lang,
+    options: {
+      method: 'GET',
+      headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer ' + TOKEN
+        }
+    },
+  };
+}
+
 
   export function GET_DETAILS_MOVIE_TRAILER(movieID) {
     return {

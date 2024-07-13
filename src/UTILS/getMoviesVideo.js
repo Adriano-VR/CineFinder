@@ -7,7 +7,7 @@ const GetTrailerMovie = () => {
     const {request} = useFetch()
 
 
-    async function getDetailsVideos(id) {
+    async function getMoviesVideos(id) {
         const { url, options } =  GET_DETAILS_MOVIE_TRAILER(id);
         const {json} = await request(url, options); 
             const trailerFilme =  getOficialTrailer(json.results)
@@ -32,7 +32,7 @@ const GetTrailerMovie = () => {
     
 
 
-  return getDetailsVideos
+  return getMoviesVideos
 }
 
 export default GetTrailerMovie

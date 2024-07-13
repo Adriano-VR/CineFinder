@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GET_SERIES_ONTHEAIR } from "../../ENDPOINTS/api.js";
 import useFetch from "../../HOOKS/useFetch.jsx";
 import ListarLayout from "../../COMPONENTS/ListarLayout.jsx";
+import { useLocation, useNavigation, useParams } from "react-router-dom";
 
 
 const TVSeries = () => {
@@ -16,16 +17,21 @@ const TVSeries = () => {
     setData(json.results);
     setTotalPages(json.total_pages);
   };
+  
 
   useEffect(() => {
     fetchData(page);
+   
   }, [page, request]); 
+
+const {category} = useParams()
+
 
 
   return (
     <div>
       {data && data.length > 0 && (
-        <ListarLayout arr={data} category="SERIES" total_pages={total_pages} setPage={setPage} />
+        <ListarLayout arr={data} category={category} total_pages={total_pages} setPage={setPage} />
       )}
     </div>
   );
