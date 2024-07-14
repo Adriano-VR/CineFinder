@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { GET_NOWPLAYING, GET_POPULAR,GET_TOP_RATED } from "../ENDPOINTS/api.js";
-import useFetch from "../HOOKS/useFetch.jsx"
+import useFetch from "./useFetch.js"
 
-// Function to return the corresponding icon component based on typeName
-export const WhatsURL = (category,page) => {
+export const useChangeCategory = (category,page) => {
    
     const {request,loading} = useFetch();
     const [data, setData] = useState([]);

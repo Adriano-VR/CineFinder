@@ -2,7 +2,7 @@
   import { useState,useEffect } from "react"
   import ListarLayout from "../../COMPONENTS/ListarLayout.jsx";
 import Loader from "../../COMPONENTS/Loader.jsx";
-import {WhatsURL} from "../../UTILS/utils.js";
+import {useChangeCategory} from "../../HOOKS/useChangeCategory.js";
 
   const FilmesCategoria = () => {
     const { category } = useParams();
@@ -13,7 +13,7 @@ import {WhatsURL} from "../../UTILS/utils.js";
     }, [])
     
    
-  const {data,infoPage,loading} = WhatsURL((category.replace(/-/g, '').trim().toLowerCase()),page)
+  const {data,infoPage,loading} = useChangeCategory((category.replace(/-/g, '').trim().toLowerCase()),page)
 
     if (loading) {
       return <Loader />;

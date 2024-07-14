@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "../../CSS/transtition.css"
 import SectionMovies from "../../TELAS/HOME/SectionMovies.jsx";
-import { WhatsURL } from "../../UTILS/utils.js";
+import { useChangeCategory } from "../../HOOKS/useChangeCategory.js";
 import InfoFilmesHomePage from "../../TELAS/HOME/InfoFilmesHomePage.jsx";
 
 const HomePage = () => {
@@ -12,7 +12,7 @@ const HomePage = () => {
   const [index, setIndex] = React.useState(1);
   const [movies, setMovies] = React.useState([]);
 
-  const {data} = WhatsURL('popular')
+  const {data} = useChangeCategory('popular')
   
   useEffect(() => {
     async function fetchData() {
@@ -23,12 +23,12 @@ const HomePage = () => {
 fetchData();
 }, [index,data]);
 
-
+//tirar daqui e fazer direto no hook
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % movies.length);
-    }, 5000); // Change movie every 5 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, [movies.length]);
@@ -43,7 +43,7 @@ fetchData();
 
   return (
     <>
-    <div className="relative h-[93vh]  overflow-hidden">
+    <div className="relative md:h-[93vh]   md:overflow-hidden">
       {selectedMovie && (
         <>
           <SwitchTransition mode="in-out">
@@ -52,7 +52,7 @@ fetchData();
               timeout={1000} // Duration of animation in milliseconds
               classNames="fade" // CSS class names for transition
             >
-              <div className="absolute">
+              <div className="hidden md:absolute md:block">
                 <img
                   src={`https://image.tmdb.org/t/p/original/${selectedMovie.backdrop_path}`}
                   alt={selectedMovie.title || "Movie Image"}

@@ -112,14 +112,14 @@ const urlPath = `${type}/${cat}`;
 console.log(urlPath);
 
   return (
-    <div className='flex justify-between items-center h-[7vh] z-50 bg-[hsla(0,0%,8%,.9)] text-[#FAA307]'>
+    <div className='flex sm:justify-center justify-between items-center h-[7vh]  bg-[hsla(0,0%,8%,.9)] text-[#FAA307]'>
       <div className="w-11/12 flex justify-between items-center m-auto">
         <div className="flex gap-28 items-center">
           <div className='hover:scale-110 duration-300 cursor-pointer' onClick={handleLogoClick}>
               <h1 className=' text-2xl tracking-widest  font-bold font-racing'>CINEFINDER</h1>
           </div>
           <nav>
-            <ul className="flex gap-3 cursor-pointer text-base h-7 border-[#FAA307]">
+            <ul className="hidden  md:flex gap-3 cursor-pointer text-base h-7 border-[#FAA307]">
               <li 
                 className={selectedCategory === 'filmes' ? 'font-extrabold border-b border-inherit' : null}
               >
@@ -139,7 +139,7 @@ console.log(urlPath);
             </ul>
           </nav>
         </div>
-        <div className='flex items-center text-base gap-5 ' >
+        <div className='hidden md:flex items-center text-base gap-5 ' >
               <select value={lang}  onChange={handleLanguageChange} className=" select select-ghost  max-w-xs  ">
               <option value="en-US">US</option>
               <option value="pt-BR">BR</option>
@@ -158,9 +158,7 @@ console.log(urlPath);
                   Login
                 </button>
                 </div>
-                // <button onClick={handleLogin} className='flex items-center gap-1.5  p-2  rounded-lg '>
-                // <CircleUserRound className='size-5'/>Login
-                // </button>
+               
               )}
           </div>
         </div>

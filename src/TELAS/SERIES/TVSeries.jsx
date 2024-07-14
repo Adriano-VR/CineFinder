@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { GET_SERIES_ONTHEAIR } from "../../ENDPOINTS/api.js";
-import useFetch from "../../HOOKS/useFetch.jsx";
+import useFetch from "../../HOOKS/useFetch.js";
 import ListarLayout from "../../COMPONENTS/ListarLayout.jsx";
-import { useLocation, useNavigation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 const TVSeries = () => {
