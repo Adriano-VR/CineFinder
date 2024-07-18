@@ -2,22 +2,22 @@ import { useLocation } from "react-router-dom";
 import ShowDetailsMovies from "./ShowDetailsMovies";
 import Loader from "../../COMPONENTS/Loader";
 import useGetMovieInformation from "../../HOOKS/useGetMovieInformation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 const PageDetails = () => {
   const { state } = useLocation();
-  const [data,setData] = useState([{}]);
 
   const filme = state && state.key;
 
   // const [detailsSeries, setDetailsSeries] = useState([{}])
 
-  const { getDetails, diretorActor, loading } = useGetMovieInformation()
+  const { getDetails, movieDetails, diretorActor, loading } = useGetMovieInformation()
 
   async function fetch () {
-    setData(await getDetails({id: filme.id, tipo: "filmes"}));
+    await getDetails({id: filme.id})
   }
 
   const { diretor, elenco } = diretorActor;
+  
 
   const isMovie = sessionStorage.getItem("selectedCategory") === "filmes";
 
@@ -25,6 +25,8 @@ const PageDetails = () => {
   useEffect(() => {
     fetch()
   },[])
+
+
 
   if (loading ) return <Loader />;
 
@@ -34,7 +36,7 @@ const PageDetails = () => {
         <ShowDetailsMovies
           diretor={diretor}
           elenco={elenco}
-          detalhes={data}
+          detalhes={movieDetails}
         />
       )}
     </>

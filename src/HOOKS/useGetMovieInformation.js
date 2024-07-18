@@ -1,34 +1,38 @@
-import { useState, useCallback } from "react";
-import { GET_CREDITS_MOVIE, GET_DETAILS_MOVIE, GET_DETAILS_MOVIE_TRAILER, GET_DETAILS_SERIE } from "../ENDPOINTS/api.js";
+import { useState, useCallback, useEffect } from "react";
+import { GET_CREDITS_MOVIE, GET_DETAILS_MOVIE, GET_DETAILS_MOVIE_TRAILER } from "../ENDPOINTS/api.js";
 import useFetch from "./useFetch.js";
 
 const useGetMovieInformation  = () => {
   const { request, loading } = useFetch();
   const [diretorActor, setDiretorActor] = useState({ elenco: [], diretor: null });
+  const [movieDetails, setMovieDetails] = useState([{}]);
 
-  const getDetails = useCallback(async ({ id, tipo }) => {
+ useEffect(() => {
+
+  
+ })
+  
+  const getDetails = useCallback(async ({ id }) => {
+
     if (!id) {
       console.warn("ID inválido fornecido para getDetails");
       return;
     }
-      
-    if (tipo === 'filmes') {
+    try {
       const { url, options } = GET_DETAILS_MOVIE(id);
       const { json } = await request(url, options);
       if (json) {
-        console.log(json);
         await getCreditsMovie(id);
-        return json
-      
+        setMovieDetails(json);
       }
-    } else if (tipo === 'series') {
-      const { url, options } = GET_DETAILS_SERIE(id);
-      const { json } = await request(url, options);
-      return json;
+    } catch (error) {
+      console.error("Erro ao obter detalhes do filme:", error);
     }
+  
     return null;
-  }, []);
 
+  }, []);
+  
   const getCreditsMovie = useCallback(async (id) => {
     const { url, options } = GET_CREDITS_MOVIE(id);
     const { json } = await request(url, options);
@@ -40,7 +44,7 @@ const useGetMovieInformation  = () => {
       });
     }
   }, [request]);
-
+  
   const getMoviesVideos = useCallback(async (id) => {
     const { url, options } = GET_DETAILS_MOVIE_TRAILER(id);
     const { json } = await request(url, options);
@@ -67,7 +71,8 @@ const useGetMovieInformation  = () => {
   }, []);
 
 
-  return {diretorActor, loading, getMoviesVideos, getDetails};
+  
+  return {diretorActor, loading, getMoviesVideos, movieDetails,getDetails};
 };
 
 export default useGetMovieInformation ;

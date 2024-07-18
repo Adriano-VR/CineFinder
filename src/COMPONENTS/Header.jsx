@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GET_ACCOUNT_DETAILS, GET_REQUEST_TOKEN } from '../ENDPOINTS/api';
 import useFetch from '../HOOKS/useFetch';
 import {CircleUserRound,CircleChevronDown,X,DoorOpen} from "lucide-react"
@@ -86,7 +86,6 @@ const Header = () => {
   };
 
   const [selectedCategory, setSelectedCategory] = useState(sessionStorage.getItem("selectedCategory") || "filmes");
-  
   useEffect(() => {
     sessionStorage.setItem("selectedCategory", selectedCategory);
     

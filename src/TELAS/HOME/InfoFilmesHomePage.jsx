@@ -4,17 +4,16 @@ import useGetMovieInformation from "../../HOOKS/useGetMovieInformation";
 import { useEffect, useState } from "react";
 
 const InfoFilmesHomePage = ({ selectedMovie }) => {
-  const { getDetails } = useGetMovieInformation();
-  const [data,setData] = useState([{}])
+  const { movieDetails, getDetails } = useGetMovieInformation();
 
   
   const fetch = async () => {
-    setData(await getDetails({ id : selectedMovie.id, tipo:"filmes" }))
+    await getDetails({ id : selectedMovie.id })
   }
 
   useEffect (() => {
     fetch()
-  },[data])
+  },[])
 
 
 
@@ -35,11 +34,11 @@ const InfoFilmesHomePage = ({ selectedMovie }) => {
       <div className="sm:pl-10 sm:w-10/12 md:pl-20 md:w-7/12">
         <h1 className="2xl:text-6xl xl:text-4xl font-bold tracking-wider">{selectedMovie.title}</h1>
         <div className="py-3 sm:py-4 md:py-5 italic text-2xl sm:text-2xl md:text-3xl tracking-wider text-zinc-100">
-          {data.tagline ? <p>{data.tagline}</p> : null}
+          {movieDetails.tagline ? <p>{movieDetails.tagline}</p> : null}
         </div>
-        {data.genres && (
+        {movieDetails.genres && (
           <ul className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 list-disc">
-            {data.genres.map((genre) => (
+            {movieDetails.genres.map((genre) => (
               <li className="pr-2 sm:pr-3 md:pr-4 first:list-none first:pl-0 text-xs sm:text-sm md:text-sm italic" key={genre.id}>
                 {genre.name}
               </li>
